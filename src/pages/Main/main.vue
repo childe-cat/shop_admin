@@ -38,6 +38,7 @@
                 @click:append="show = !show"
                 v-model="password"
                 validate-on-blur
+                @keyup.enter="login"
                 :rules="[Rules.required,Rules.passwordNum]"
             ></v-text-field>
           </div>

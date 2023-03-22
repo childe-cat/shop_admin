@@ -1,7 +1,26 @@
 <template>
   <v-card class="app">
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        top
+        :color="color_text"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            :color="color_btn"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
 <!--    左侧菜单栏-->
-    <navigationDrawer />
+    <navigationDrawer @tiggerSnackbar="tiggerSnackbar"/>
 <!--    -->
     <v-row no-gutters>
       <v-col md="12">
@@ -26,6 +45,25 @@ export default {
   components:{
     navigationDrawer
   },
+  data(){
+    return{
+      //消息条
+      snackbar: false,
+      color_text:'success',
+      color_btn:'white',
+      text: 'My timeout is set to 2000.',
+      timeout:2000,
+    }
+  },
+  methods:{
+    //弹出消息栏
+    tiggerSnackbar(){
+      this.color_btn = 'blue'
+      this.color_text = 'black'
+      this.text = '功能正在开发，敬请期待'
+      this.snackbar = true
+    },
+  }
 }
 </script>
 

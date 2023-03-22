@@ -176,7 +176,7 @@ export default {
         ],
         //  系统
         system:[
-          ['安全管理'],['邮件队列管理']
+          ['安全管理','safetyManagement'],['邮件队列管理','mailQueue']
         ],
       },
       adminInfo:{}
@@ -184,6 +184,10 @@ export default {
   },
   methods:{
     jump(name){
+      const fall = ['active','coupons','userCenter','mailQueue','safetyManagement']
+      if(fall.includes(name)){
+        return this.$emit('tiggerSnackbar')
+      }
       this.$router.push({
         name:name
       })

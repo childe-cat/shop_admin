@@ -1,5 +1,24 @@
 <template>
 <v-container fluid>
+  <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      top
+      :color="color_text"
+  >
+    {{ text }}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn
+          :color="color_btn"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </template>
+  </v-snackbar>
       <v-toolbar
           color="cyan"
           class="rounded"
@@ -53,10 +72,11 @@
                   <template v-slot:[`item.time`]="{ item }">
                     {{timestampToTime(item.time)}}
                   </template>
-                  <template v-slot:[`item.action`]="{  }">
+                  <template v-slot:[`item.action`]="{ item }">
                     <v-btn
                         outlined
                         color="success"
+                        @click="handle(item)"
                     >
                       操作
                     </v-btn>
@@ -185,6 +205,12 @@ export default {
       all_num:0,
       all_price:0,
       blurb:[],
+      //消息条
+      snackbar: false,
+      color_text:'success',
+      color_btn:'white',
+      text: 'My timeout is set to 2000.',
+      timeout:2000,
     }
   },
   watch:{
@@ -218,6 +244,13 @@ export default {
       let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
       return Y + M + D + h + m + s;
     },
+    //弹出消息栏
+    tiggerSnackbar(text_color,btn_color,text){
+      this.color_btn = btn_color
+      this.color_text = text_color
+      this.text = text
+      this.snackbar = true
+    },
     //商品信息传递给对话框
     openBlurb(item){
       this.all_num = 0
@@ -227,6 +260,11 @@ export default {
       this.blurb.forEach(item=>{
         this.all_num += item.num
       })
+    },
+  //  操作订单
+    handle(item){
+      console.log(item)
+      this.tiggerSnackbar('black','blue','功能开发中')
     }
   },
   computed: {
