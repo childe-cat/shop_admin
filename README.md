@@ -1,6 +1,6 @@
 # shop_admin
 
-###适合新手学习的node后台，以练代学
+适合新手学习的node后台，以练代学
 
 ## Project setup
 ```
